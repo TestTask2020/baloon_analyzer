@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import test.task.baloonproducer.utils.WeatherUtils;
+
 @Component
 public class SenderJob {
 	
@@ -18,6 +20,8 @@ public class SenderJob {
 	
 	private AtomicInteger atomicInteger = new AtomicInteger();
 	
+	
+	
 	@Autowired
 	public SenderJob(RabbitTemplate rabbitTemplate) {
 		this.rabbitTemplate = rabbitTemplate;
@@ -26,7 +30,8 @@ public class SenderJob {
 	@Scheduled(cron = "*/1 * * * * *")
 	public void generateTestData() {
 		rabbitTemplate.convertAndSend(BaloonProducerApplication.topicExchangeName, "baloon.data.weather",
-				"Hello from BaloonProducerApplication " + atomicInteger.incrementAndGet());
+				WeatherUtils.formatWeather(WeatherUtils.generateWeather()));
 	}
+
 
 }
