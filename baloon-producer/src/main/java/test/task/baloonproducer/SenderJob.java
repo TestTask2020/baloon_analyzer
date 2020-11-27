@@ -33,7 +33,7 @@ public class SenderJob {
 	@Scheduled(cron = "*/100 * * * * *")
 	public void generateTestData() {
 		List<String> weatherList = new ArrayList<>();
-		for (int i = 0; i < 1_000; i++) {
+		for (int i = 0; i < 1_000_000; i++) {
 			weatherList.add(WeatherUtils.formatWeather(WeatherUtils.generateWeather()));
 		}
 		for (final String weatherString : weatherList) {
