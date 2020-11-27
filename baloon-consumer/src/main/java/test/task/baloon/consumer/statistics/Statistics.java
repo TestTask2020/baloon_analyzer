@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
 
-import test.task.baloon.consumer.weather.model.Location;
 import test.task.baloon.consumer.weather.model.Observatory;
 
 public class Statistics {
@@ -62,7 +61,8 @@ public class Statistics {
 		Integer count = observationsCounts.get(observatory);
 		if (count == null) {
 			observationsCounts.put(observatory, 0);
-		} else {
+		}
+		else {
 			observationsCounts.put(observatory, count + 1);
 		}
 	}

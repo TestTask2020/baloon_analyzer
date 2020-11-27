@@ -2,6 +2,7 @@ package test.task.baloon.consumer.weather.model;
 
 import java.util.StringJoiner;
 
+
 public class Location {
 	private Integer x;
 	private Integer y;

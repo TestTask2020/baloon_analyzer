@@ -17,10 +17,14 @@ public class BaloonDataReceiver {
 	@Autowired
 	private StatisticsService statisticsService;
 	
+	@Autowired
+	private WeatherRepository weatherRepository;
+	
 	public void receiveMessage(String message) {
 		LOGGER.debug("Received message: {}", message);
 		Weather weather = WeatherParser.parseWeather(message);
 		LOGGER.debug("Received weather: {}", weather);
+		weatherRepository.save(weather); // TODO batch save using producer-consumer pattern
 		statisticsService.updateStatistics(weather);
 	}
 
