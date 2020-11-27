@@ -1,5 +1,9 @@
 package test.task.baloon.consumer.statistics;
 
-public interface StatisticsService {
+import test.task.baloon.consumer.weather.model.Weather;
 
+public interface StatisticsService {
+	
+	void updateStatistics(Weather weather);
+	
 }
