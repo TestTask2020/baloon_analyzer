@@ -1,5 +1,7 @@
 package test.task.baloonproducer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.slf4j.Logger;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import test.task.baloonproducer.model.Weather;
 import test.task.baloonproducer.utils.WeatherUtils;
 
 @Component
@@ -27,10 +30,17 @@ public class SenderJob {
 		this.rabbitTemplate = rabbitTemplate;
 	}
 	
-	@Scheduled(cron = "*/1 * * * * *")
+	@Scheduled(cron = "*/100 * * * * *")
 	public void generateTestData() {
-		rabbitTemplate.convertAndSend(BaloonProducerApplication.topicExchangeName, "baloon.data.weather",
-				WeatherUtils.formatWeather(WeatherUtils.generateWeather()));
+		List<String> weatherList = new ArrayList<>();
+		for (int i = 0; i < 1_000_000; i++) {
+			weatherList.add(WeatherUtils.formatWeather(WeatherUtils.generateWeather()));
+		}
+		for (final String weatherString : weatherList) {
+			rabbitTemplate.convertAndSend(BaloonProducerApplication.topicExchangeName, "baloon.data.weather",
+					weatherString);
+		}
+		
 	}
 
 
