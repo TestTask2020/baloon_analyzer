@@ -1,4 +1,4 @@
-package test.task.baloon.consumer.model;
+package test.task.baloon.consumer.weather.model;
 
 import java.util.StringJoiner;
 

@@ -1,18 +1,14 @@
-package test.task.baloon.consumer.utils;
+package test.task.baloon.consumer.weather.utils;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.Random;
-import java.util.StringJoiner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import test.task.baloon.consumer.model.Location;
-import test.task.baloon.consumer.model.Observatory;
-import test.task.baloon.consumer.model.Weather;
+import test.task.baloon.consumer.weather.model.Location;
+import test.task.baloon.consumer.weather.model.Observatory;
+import test.task.baloon.consumer.weather.model.Weather;
 
 public class WeatherParser {
 	

@@ -11,6 +11,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import test.task.baloon.consumer.weather.BaloonDataReceiver;
+
 @SpringBootApplication
 public class BaloonConsumerApplication {
 	
