@@ -1,9 +1,5 @@
 package test.task.baloon.consumer.statistics;
 
-import java.util.zip.DeflaterOutputStream;
-
-import javax.annotation.PostConstruct;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -16,27 +12,24 @@ public class StatisticsServiceImpl implements StatisticsService {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(StatisticsServiceImpl.class);
 	
-	private Statistics statistics;
-	
-	@PostConstruct
-	public void setup() {
-		statistics = new Statistics();
-	}
+	private static final Statistics STATISTICS = new Statistics();
 	
 	@Override
 	public void updateStatistics(Weather weather) {
-		statistics.setMinimumTemperature(calculateMinimumTemperature(statistics, weather));
-		statistics.setMaximumTemperature(calculateMaximumTemperature(statistics, weather));
-		statistics.setMeanTemperature(calculateMeanTemperature(statistics));
-		statistics.updateObsevationsNumber(weather.getObservatory());
-		if (weather.getLocation() != null) {
-			if (statistics.getLastX() != null && statistics.getLastY() != null) {
-				statistics.setTotalDistance(calculateTotalDistance(statistics, weather));
-				statistics.setLastX(toKm(weather.getLocation().getX(), weather.getObservatory()));
-				statistics.setLastX(toKm(weather.getLocation().getY(), weather.getObservatory()));
+		synchronized (STATISTICS) {
+			STATISTICS.setMinimumTemperature(calculateMinimumTemperature(STATISTICS, weather));
+			STATISTICS.setMaximumTemperature(calculateMaximumTemperature(STATISTICS, weather));
+			STATISTICS.setMeanTemperature(calculateMeanTemperature(STATISTICS));
+			STATISTICS.updateObsevationsNumber(weather.getObservatory());
+			if (weather.getLocation() != null) {
+				if (STATISTICS.getLastX() != null && STATISTICS.getLastY() != null) {
+					STATISTICS.setTotalDistance(calculateTotalDistance(STATISTICS, weather));
+					STATISTICS.setLastX(toKm(weather.getLocation().getX(), weather.getObservatory()));
+					STATISTICS.setLastX(toKm(weather.getLocation().getY(), weather.getObservatory()));
+				}
 			}
+			LOGGER.debug("Updated statistics: {}", STATISTICS);
 		}
-		LOGGER.debug("Updated statistics: {}", statistics);
 	}
 	
 	private Integer calculateMinimumTemperature(final Statistics statistics, final Weather weather) {
